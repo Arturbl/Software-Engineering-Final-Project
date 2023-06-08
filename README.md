@@ -48,3 +48,8 @@ To use the system, follow these steps:
    docker-compose build --no-cache
    docker-compose up -d    
     
+## Contributors
+    * Artur Costa
+    * Enzo Sousa
+    * Tomas Dias
+    * Francisco Alves
