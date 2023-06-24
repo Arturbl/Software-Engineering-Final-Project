@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS "arduino-security-system-postgres-db"."user_session"
     id           bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
     userid       bigint,
     token        character varying(50) COLLATE pg_catalog."default",
-    date_add     date DEFAULT CURRENT_TIMESTAMP,
-    date_expires date,
+    date_add     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_expires TIMESTAMP,
     CONSTRAINT id PRIMARY KEY (id),
     CONSTRAINT fk_tabela_filho_tabela_pai FOREIGN KEY (userid)
         REFERENCES "arduino-security-system-postgres-db"."User" (userid) MATCH SIMPLE

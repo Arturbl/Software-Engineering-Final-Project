@@ -28,6 +28,14 @@ router.post('/authenticate',
         return {...userLogin.rows[0], token};
     }));
 
+router.post('/logout_everywhere',
+    validateBearerToken,
+    routeWrapper(async (req) => {
+        await req.db.knex(knex("user_session").where({user: req.session.user}).del());
+        return {message: "Success"};
+    }));
+
+
 router.post('/create_user',
     body("username", "Invalid username").trim().matches(/^[a-z]+$/),
     body("password", "Invalid password").trim().isLength({min: 1}),
