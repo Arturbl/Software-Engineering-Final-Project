@@ -15,7 +15,6 @@ router.get('/', validateBearerToken, routeWrapper(async (req) => {
 router.post('/authenticate',
     routeWrapper(async (req) => {
         //TODO
-
         let password = sha512.crypt(req.body.password, "$6$rounds=1000$ueCGNzfSS9DT")
         let userLogin = await req.db.query(`select *
                                             from "arduino-security-system-postgres-db"."User"
