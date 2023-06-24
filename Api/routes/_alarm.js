@@ -5,25 +5,28 @@ const {body} = require("express-validator");
 const {sha512} = require("sha512-crypt-ts");
 
 router.get('/', routeWrapper(async (req) => {
-        if (req.query.userID)
-            return await req.db.query(`select * from registro_alarme inner join "User" on User.userid = registro_alarme.userid`)
-        return await req.db.query(`select * from registro_alarme`)
-        return teste;
-    }));
+    let teste = null
+    if (req.query.userID)
+        return (await req.db.query(`select *
+                                    from "arduino-security-system-postgres-db".registro_alarme
+                                             inner join "arduino-security-system-postgres-db"."User"
+                                                        on "arduino-security-system-postgres-db"."User".userid =
+                                                           "arduino-security-system-postgres-db".registro_alarme.userid`)).rows;
+    await req.db.query(`select *
+                        from "arduino-security-system-postgres-db".registro_alarme`)
+    return teste.rows;
+}));
 
 router.post('/add',
-    body("distancia").trim().matches(/^\d+$/),
     routeWrapper(async (req) => {
-        let date = new Date();
         let existentUser = await req.db.query(`select *
-                                               from "User"
+                                               from "arduino-security-system-postgres-db"."User"
                                                where userid = '${req.body.userID}'`)
         if (existentUser.rows.length === 0)
             throw "USER doesn't exists"
-        await req.db.query(`INSERT INTO "registro_alarme"(distancia, admin, "data", "userID")
-                            VALUES (${req.body.distancia},
-                                    ${req.body.admin ? req.body.admin : false},
-                                    ${req.body.data ? req.body.data : date.now()}`);
+        await req.db.query(`INSERT INTO "arduino-security-system-postgres-db".registro_alarme(distancia, userid)
+                            VALUES ($1, $2)`, [req.body.distancia.toFixed(3),
+            req.body.userID]);
         return "Create Alarm";
     }));
 
