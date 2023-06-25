@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:arduino_security_system/controller/databaseConnector.dart';
+import 'package:arduino_security_system/controller/user/userController.dart';
 import 'package:flutter/material.dart';
 
 
@@ -10,12 +10,10 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-  final DatabaseConnector databaseConnector = DatabaseConnector();
-  final TextEditingController _usernameController = TextEditingController(text: 'arturesmavc@gmail.com');
-  final TextEditingController _passwordController = TextEditingController(text: '1234567956526');
+  final TextEditingController _usernameController = TextEditingController(text: 'admin');
+  final TextEditingController _passwordController = TextEditingController(text: 'admin');
   String _error1 = '';
   bool _loading = false;
-
 
 
   void _validadeUsernameAndPassword() async {
@@ -25,17 +23,11 @@ class _LoginState extends State<Login> {
     String username = _usernameController.text;
     String password = _passwordController.text;
     if(username.isNotEmpty && password.isNotEmpty) {
-      if(username.contains('@')) {
-        // check username and passoword
-        String response = "done";
-        if(response == "done") {
-          //Navigator.pop(context);
-          Navigator.pushNamed(context, "/home");
-        } else {
-          _setError(response);
-        }
+      final response = await UserController.login(username, password);
+      if(response == "done") {
+        Navigator.pushNamed(context, "/home");
       } else {
-        _setError('Enter a valid username');
+        _setError("Invalid credentials.");
       }
     } else {
       _setError('Check for missing fields');
