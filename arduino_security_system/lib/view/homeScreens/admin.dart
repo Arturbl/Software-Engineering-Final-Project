@@ -50,10 +50,9 @@ class _AdminPageState extends State<AdminPage> {
                     );
                     _passwordController.text = "";
                   } else {
-                    // setState(() {
-                    //   // Add an error message to display in the bottom sheet
-                    //   errorMessage = "Failed to update password. Please try again.";
-                    // });
+                    setState(() {
+                      _error = "Failed to update password. Please try again.";
+                    });
                   }
                 },
                 child: const Text('Save'),

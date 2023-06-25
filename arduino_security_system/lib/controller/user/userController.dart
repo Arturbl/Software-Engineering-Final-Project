@@ -11,6 +11,7 @@ class UserController {
   static const String loginUrl = "http://localhost:3001/api/user/authenticate";
   static const String getAllUrl = "http://localhost:3001/api/user/";
   static const String updatePasswordUrl = "http://localhost:3001/api/user/update";
+  static const String logoutUrl = "http://localhost:3001/api/user/logout_everywhere";
 
   static Future<String> createUser(String username, String password) async {
     final response = await http.post(
@@ -81,6 +82,25 @@ class UserController {
     }
     return ApiResponse.fromJson(jsonDecode(response.body)).message;
   }
+
+  static Future<bool> logout(String? username, String? password, String? token) async {
+    final response = await http.post(
+      Uri.parse(logoutUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': 'Bearer ${token!}',
+      },
+      body: jsonEncode(<String, String>{
+        "username": username!,
+        "password": password!
+      }),
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
 
 
 }

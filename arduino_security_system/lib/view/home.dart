@@ -46,6 +46,18 @@ class _HomeState extends State<Home> {
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
+        actions: [
+
+          TextButton(
+            child: const Icon(Icons.logout, color: Colors.black),
+            onPressed: () async {
+              UserController.logout(user.username, user.password, user.token).then((value) {
+                Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+              });
+            },
+          )
+
+        ],
       ),
       body: IndexedStack(
         index: index,
