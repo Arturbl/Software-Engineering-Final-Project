@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:arduino_security_system/model/User.dart';
 
 class HistoryScreen extends StatefulWidget {
+  final User user;
+  const HistoryScreen({Key? key, required this.user}) : super(key: key);
+
   @override
   _HistoryScreenState createState() => _HistoryScreenState();
 }

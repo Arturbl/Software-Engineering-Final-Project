@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../controller/user/userController.dart';
+
 class CreateAccount extends StatefulWidget {
   @override
   _CreateAccountState createState() => _CreateAccountState();
@@ -8,9 +10,9 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
 
-  final TextEditingController _usernameController = TextEditingController(text: 'arturesmavc@gmail.com');
-  final TextEditingController _passwordController = TextEditingController(text: '1234567956526');
-  final TextEditingController _confirmPasswordController = TextEditingController(text: '1234567956526');
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   String _error1 = '';
   bool _loading = false;
 
@@ -25,11 +27,12 @@ class _CreateAccountState extends State<CreateAccount> {
     String confirmPassoword = _confirmPasswordController.text;
     if(username.isNotEmpty && password.isNotEmpty) {
       if(password == confirmPassoword) {
-        // check username and passoword
-        String response = "done";
+        final response = await UserController.createUser(
+          username,
+          password
+        );
         if(response == "done") {
-          //Navigator.pop(context);
-          // change pages
+          Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
         } else {
           _setError(response);
         }

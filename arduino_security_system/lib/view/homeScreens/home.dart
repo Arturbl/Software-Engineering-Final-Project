@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:arduino_security_system/model/User.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final User user;
+  const HomeScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -16,22 +18,22 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 SizedBox(
                   height: MediaQuery.of(context).size.width * 0.35,
                   width: MediaQuery.of(context).size.width * 0.35,
                   child: Container(
                     decoration: const BoxDecoration(
-                        color: Colors.black
+                      color: Colors.black,
                     ),
-                    child: const Text("Camera snapshot", style: TextStyle(color: Colors.white),),
+                    child: const Text(
+                      "Camera snapshot",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: SizedBox(
@@ -39,32 +41,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: Container(
                       decoration: const BoxDecoration(
-                          color: Colors.black
+                        color: Colors.black,
                       ),
-                      child: const Text("Buzzer Status", style: TextStyle(color: Colors.white),),
+                      child: const Text(
+                        "Buzzer Status",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                  ),)
-
+                  ),
+                ),
               ],
             ),
-
             Padding(
               padding: const EdgeInsets.only(top: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   SizedBox(
                     height: MediaQuery.of(context).size.width * 0.35,
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: Container(
                       decoration: const BoxDecoration(
-                          color: Colors.black
+                        color: Colors.black,
                       ),
-                      child: const Text("Alarm ON", style: TextStyle(color: Colors.white),),
+                      child: const Text(
+                        "Alarm ON",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: SizedBox(
@@ -72,20 +77,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: MediaQuery.of(context).size.width * 0.35,
                       child: Container(
                         decoration: const BoxDecoration(
-                            color: Colors.black
+                          color: Colors.black,
                         ),
-                        child: const Text("Alarm OFF", style: TextStyle(color: Colors.white),),
+                        child: const Text(
+                          "Alarm OFF",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                    ),)
-
-
+                    ),
+                  ),
                 ],
               ),
-            )
-
+            ),
           ],
-        )
-      )
+        ),
+      ),
     );
   }
 }
