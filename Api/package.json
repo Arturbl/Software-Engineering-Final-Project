@@ -5,12 +5,15 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@tweedegolf/storage-abstraction": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
     "express-validator": "^7.0.1",
     "knex": "^2.4.2",
     "morgan": "^1.10.0",
     "pg": "^8.11.0",
-    "sha512-crypt-ts": "^0.1.27"
+    "sha512-crypt-ts": "^0.1.27",
+    "sharp": "^0.32.1"
   }
 }

@@ -5,6 +5,14 @@ dotenv.config();
 
 let app = express();
 
+
+const fileUpload = require('express-fileupload');
+app.use(fileUpload({
+    parseNested: true,
+    safeFileNames: true,
+    abortOnLimit: true
+}));
+
 const morgan = require("morgan");
 app.use(morgan('combined'));
 
@@ -32,7 +40,6 @@ app.get('/', routeWrapper(async (req) => {
         message: "Final project API"
     };
 }));
-
 app.use('/api', require("./routes"));
 
 // catch 404 and forward to error handler
