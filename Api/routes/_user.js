@@ -20,6 +20,8 @@ router.post('/authenticate',
                                             from "arduino-security-system-postgres-db"."User"
                                             WHERE password = '${password}'
                                               and username = '${req.body.username}'`)
+        if (userLogin.rows.length === 0)
+            throw "USER DOESN'T EXISTS"
         let token = crypto.randomUUID();
 
         let teste = await req.db.query(`INSERT INTO "arduino-security-system-postgres-db"."user_session" (userid, token, date_expires)
@@ -31,7 +33,9 @@ router.post('/authenticate',
 router.post('/logout_everywhere',
     validateBearerToken,
     routeWrapper(async (req) => {
-        await req.db.knex(knex("user_session").where({user: req.session.user}).del());
+        await req.db.query(`DELETE
+                            FROM "arduino-security-system-postgres-db"."user_session"
+                            WHERE "userid" = '${req.session.userid}'`);
         return {message: "Success"};
     }));
 
@@ -57,17 +61,37 @@ router.post('/create_user',
 
 router.post('/delete_user',
     body("username", "Invalid username").trim().matches(/^[a-z]+$/),
+    validateBearerToken,
+
     routeWrapper(async (req) => {
         let existentUser = await req.db.query(`select *
                                                from "arduino-security-system-postgres-db"."User"
                                                where username = '${req.body.username}'`)
         if (existentUser.rows.length === 0 || existentUser.rows[0]?.active === false)
             throw "USER DOESN'T EXISTS"
-        //TODO ver se é admin
+        if (req.session.admin === false)
+            throw "You dont have premission"
         await req.db.query(`update "arduino-security-system-postgres-db"."User"
                             SET active= false
-                            where username = '${req.body.username}'  `);
+                            where username = '${req.body.username}'`);
         return "create_user Module";
     }));
+
+router.post('/update',
+    body("username", "Invalid username"),
+    body("password", "Invalid password"),
+    validateBearerToken,
+    routeWrapper(async (req) => {
+        if (req.session.admin === false && req.session.username !== req.body.username)
+            throw "You dont have premission"
+
+        let password = sha512.crypt(req.body.password, "$6$rounds=1000$ueCGNzfSS9DT")
+
+        await req.db.query(`update "arduino-security-system-postgres-db"."User"
+                            SET "password"= '${password}'
+                            where username = '${req.body.username}'`);
+        return "Password updated";
+    }));
+
 
 module.exports = router

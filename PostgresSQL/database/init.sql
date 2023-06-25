@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS "arduino-security-system-postgres-db"."User"
     nif      character varying(9) COLLATE pg_catalog."default",
     morada   character varying(50) COLLATE pg_catalog."default",
     admin    boolean,
-    username character varying(20) COLLATE pg_catalog."default",
+    username character varying(20) COLLATE pg_catalog."default" UNIQUE,
     password character varying(300) COLLATE pg_catalog."default",
     active   boolean DEFAULT true,
     CONSTRAINT pk_user PRIMARY KEY (userid)
