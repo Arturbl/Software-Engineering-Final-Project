@@ -19,6 +19,20 @@ CREATE TABLE IF NOT EXISTS "arduino-security-system-postgres-db"."User"
 
 ALTER TABLE IF EXISTS "User"
     OWNER to postgres;
+
+DO
+$$
+    BEGIN
+        IF NOT EXISTS(SELECT 1 FROM "arduino-security-system-postgres-db"."User" WHERE username = 'admin') THEN
+            -- Criar o usuário "admin" com senha criptografada e propriedade "admin" como true
+            INSERT INTO "arduino-security-system-postgres-db"."User" (nif, morada, admin, username, password)
+            VALUES (241144949, NULL, true, 'admin',
+                    '$6$rounds=1000$ueCGNzfSS9DT$QZutO3yqivh6uJ.PLN2TtBaL/piLVbJOTe5ghh.47U3b5iGeVEUeClaWEFx5yExNIWUqX/m..gt290xD8KLfK/');
+        END IF;
+    END
+$$;
+
+
 -- Table: public.registro_alarme
 
 DROP TABLE IF EXISTS "arduino-security-system-postgres-db".registro_alarme;
