@@ -19,11 +19,6 @@ router.get('/', routeWrapper(async (req) => {
 
 router.post('/add',
     routeWrapper(async (req) => {
-        let existentUser = await req.db.query(`select *
-                                               from "arduino-security-system-postgres-db"."User"
-                                               where userid = '${req.body.userID}'`)
-        if (existentUser.rows.length === 0)
-            throw "USER doesn't exists"
         await req.db.query(`INSERT INTO "arduino-security-system-postgres-db".registro_alarme(distancia, userid)
                             VALUES ($1, $2)`, [req.body.distancia.toFixed(3),
             req.body.userID]);
