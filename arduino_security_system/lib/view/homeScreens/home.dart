@@ -25,12 +25,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: MediaQuery.of(context).size.width * 0.35,
                   width: MediaQuery.of(context).size.width * 0.35,
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Text(
-                      "Camera snapshot",
-                      style: TextStyle(color: Colors.white),
+                    child: Center(
+                      child: Text(
+                        "Camera snapshot",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -40,12 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: MediaQuery.of(context).size.width * 0.35,
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: Container(
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Text(
-                        "Buzzer Status",
-                        style: TextStyle(color: Colors.white),
+                      child: Center(
+                        child: Text(
+                          "Buzzer Status",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -60,13 +72,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: MediaQuery.of(context).size.width * 0.35,
                     width: MediaQuery.of(context).size.width * 0.35,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.black,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Alarm ON button logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                      child: const Text(
+                      child: Text(
                         "Alarm ON",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
@@ -75,13 +96,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: SizedBox(
                       height: MediaQuery.of(context).size.width * 0.35,
                       width: MediaQuery.of(context).size.width * 0.35,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.black,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Alarm OFF button logic
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                        child: const Text(
+                        child: Text(
                           "Alarm OFF",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),

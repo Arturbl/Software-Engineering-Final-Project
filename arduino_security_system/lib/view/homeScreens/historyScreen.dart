@@ -10,21 +10,21 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  List<DropdownDetails> items = [
-    DropdownDetails('Item 1', 'Details 1'),
-    DropdownDetails('Item 2', 'Details 2'),
-    DropdownDetails('Item 3', 'Details 3'),
+  List<AlarmHistory> alarmHistoryList = [
+    AlarmHistory(DateTime(2023, 6, 25, 20, 25), 'artur'),
+    AlarmHistory(DateTime(2023, 6, 25, 20,25), 'tomas'),
+    AlarmHistory(DateTime(2023, 6, 25, 20,27), 'admin'),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-        itemCount: items.length,
+        itemCount: alarmHistoryList.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(items[index].itemName),
-            subtitle: Text(items[index].itemDetails),
+            title: Text(alarmHistoryList[index].dateTime.toString()),
+            subtitle: Text('Solved By: ${alarmHistoryList[index].solvedBy}'),
             onTap: () {
               showModalBottomSheet(
                 context: context,
@@ -37,7 +37,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            items[index].itemName,
+                            alarmHistoryList[index].dateTime.toString(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18.0,
@@ -45,7 +45,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           ),
                           SizedBox(height: 16.0),
                           Text(
-                            items[index].itemDetails,
+                            'Solved By: ${alarmHistoryList[index].solvedBy}',
                             style: TextStyle(fontSize: 16.0),
                           ),
                           SizedBox(height: 16.0),
@@ -69,9 +69,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 }
 
-class DropdownDetails {
-  final String itemName;
-  final String itemDetails;
+class AlarmHistory {
+  final DateTime dateTime;
+  final String solvedBy;
 
-  DropdownDetails(this.itemName, this.itemDetails);
+  AlarmHistory(this.dateTime, this.solvedBy);
 }

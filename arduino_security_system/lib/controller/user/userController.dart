@@ -7,11 +7,11 @@ import 'package:http/http.dart' as http;
 
 class UserController {
 
-  static const String createUserUrl = "http://localhost:3001/api/user/create_user";
-  static const String loginUrl = "http://localhost:3001/api/user/authenticate";
-  static const String getAllUrl = "http://localhost:3001/api/user/";
-  static const String updatePasswordUrl = "http://localhost:3001/api/user/update";
-  static const String logoutUrl = "http://localhost:3001/api/user/logout_everywhere";
+  static const String createUserUrl = "http://192.168.1.78:3001/api/user/create_user";
+  static const String loginUrl = "http://192.168.1.78:3001/api/user/authenticate";
+  static const String getAllUrl = "http://192.168.1.78:3001/api/user/";
+  static const String updatePasswordUrl = "http://192.168.1.78:3001/api/user/update";
+  static const String logoutUrl = "http://192.168.1.78:3001/api/user/logout_everywhere";
 
   static Future<String> createUser(String username, String password) async {
     final response = await http.post(
