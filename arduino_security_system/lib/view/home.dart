@@ -5,6 +5,7 @@ import 'package:arduino_security_system/view/homeScreens/home.dart';
 import 'package:arduino_security_system/view/homeScreens/profileScreen.dart';
 import 'package:flutter/material.dart';
 
+import '../controller/server/server.dart';
 import '../controller/user/userController.dart';
 import '../model/UserApiResponse.dart';
 
@@ -26,6 +27,9 @@ class _HomeState extends State<Home> {
     setState(() {
       users = userList;
     });
+    // Server server = Server();
+    // await server.start();
+    // server.start();
   }
 
   @override
