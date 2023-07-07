@@ -3,10 +3,10 @@ const knex = require('knex')({client: 'pg'});
 
 const pool = new Pool({
     host: "localhost",
-    user: process.env.POSTGRES_USER, // alterado para POSTGRES_USER
+    user: process.env.POSTGRES_USER,
     port: 5432,
-    password: process.env.POSTGRES_PASSWORD, // alterado para POSTGRES_PASSWORD
-    database: process.env.POSTGRES_DB, // alterado para POSTGRES_DB
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB,
     max: 20,
 });
 
