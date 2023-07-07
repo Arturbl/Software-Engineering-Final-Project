@@ -42,6 +42,8 @@ router.post('/:alarmID/turnOff',
         await req.db.query(`update "existentAlarm"
                             SET userID = req.body.userID
                             where registroid = '${req.params.alarmID}'`);
+        await req.db.query(`INSERT INTO "arduino-security-system-postgres-db".alarm_status(active, userid)
+                            VALUES (false, $1)`, [req.body.userID]);
         return "Delete Alarm";
     }));
 
@@ -52,8 +54,7 @@ router.post('/turnOn',
     routeWrapper(async (req) => {
 
         await req.db.query(`INSERT INTO "arduino-security-system-postgres-db".alarm_status(active, userid)
-                            VALUES ($1, $2)`, [req.body.active,
-            req.body.userID]);
+                            VALUES (true, $1)`, [req.body.userID]);
         return "Delete Alarm";
     }));
 
