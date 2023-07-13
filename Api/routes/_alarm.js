@@ -14,36 +14,34 @@ router.get('/', validateBearerToken
                                                  inner join "arduino-security-system-postgres-db"."User"
                                                             on "arduino-security-system-postgres-db"."User".userid =
                                                                "arduino-security-system-postgres-db".registro_alarme.userid`)).rows;
-        await req.db.query(`select *
+        teste = await req.db.query(`select *
                             from "arduino-security-system-postgres-db".registro_alarme`)
         return teste.rows;
     }));
 
+
 router.post('/add',
-    validateBearerToken,
     routeWrapper(async (req) => {
-        await req.db.query(`INSERT INTO "arduino-security-system-postgres-db".registro_alarme(distancia,
-                                                                                              register_data,
-                                                                                              turn_off_data)
-                            VALUES ($1, $2)`, [req.body.distancia.toFixed(3),
-            req.body.register_data, req.body.turn_off_data]);
+        //alarme disparou
+        let user = await req.db.query(`select *
+                                       from "arduino-security-system-postgres-db"."User"
+                                       where username = '${req.body.username}'`)
+        await req.db.query(`
+                    INSERT INTO "arduino-security-system-postgres-db".registro_alarme (distancia, register_data, turn_off_data, userid)
+                    VALUES ($1, $2, $3, $4)`,
+            [req.body.distancia.toFixed(3), req.body.register_data, req.body.turn_off_data, user.rows[0]?.userid || null]
+        );
+
         return "Create Alarm";
     }));
 
-router.post('/:alarmID/turnOff',
+router.post('/turnOff',
     body("userID").trim().matches(/^\d+$/),
     validateBearerToken,
     routeWrapper(async (req) => {
-        let existentAlarm = await req.db.query(`select *
-                                                from "existentAlarm"
-                                                where registroid = '${req.params.alarmID}'`)
-        if (existentAlarm.rows.length === 0)
-            throw "ALARM doesn't exists"
-        await req.db.query(`update "existentAlarm"
-                            SET userID = req.body.userID
-                            where registroid = '${req.params.alarmID}'`);
+        console.log(req.session)
         await req.db.query(`INSERT INTO "arduino-security-system-postgres-db".alarm_status(active, userid)
-                            VALUES (false, $1)`, [req.body.userID]);
+                            VALUES (false, $1)`, [req.session.id]);
         return "Delete Alarm";
     }));
 
@@ -52,9 +50,9 @@ router.post('/turnOn',
     body("userID").trim().matches(/^\d+$/),
     validateBearerToken,
     routeWrapper(async (req) => {
-
+        console.log(req.session)
         await req.db.query(`INSERT INTO "arduino-security-system-postgres-db".alarm_status(active, userid)
-                            VALUES (true, $1)`, [req.body.userID]);
+                            VALUES (true, $1)`, [req.session.id]);
         return "Delete Alarm";
     }));
 
